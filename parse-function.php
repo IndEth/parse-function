@@ -3,21 +3,20 @@
     {
         $parseContent = array();
         $content = explode('#', $content);
-        foreach ($content as $str){
-            preg_match("|^(.*)\n|U", $str, $res);
-            foreach ($res as $item){
-                 if(preg_match("|=(.*)\n|U", $item, $parseDes)){
-                     $des = $parseDes[1];
-                     preg_match("|^(.*)=|U", $item, $parseKey);
-                     $key = $parseKey[1];
-                 }
-                 else{
-                    $key = $item;
-                    $des = str_replace($key, '', $str);
-                 }
-                 $parseContent[$key] = $des;
-                 break;
+        foreach ($content as $exp){
+            $str = explode("\n", $exp, 2);
+            $keyStr = explode('=', $str[0], 2);
+            if($keyStr[0]!=$str[0]){
+                $key = $keyStr[0];
+                $des = str_replace($keyStr[0].'=', '', $str[0]);
             }
+            else{
+                $key = $str[0];
+                $des = str_replace($str[0], '', $exp);
+            }
+            trim($key);
+            trim($des);
+            $parseContent[$key] = $des;
         }
         return $parseContent;
     }
