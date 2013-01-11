@@ -5,6 +5,9 @@ function parseContent($content)
     $parseContent = array();
     $content = explode('#', $content);
     foreach ($content as $exp) {
+        if (empty($exp))
+            continue;
+        
         $str = explode("\n", $exp, 2);
         $keyStr = explode('=', $str[0], 2);
         if ($keyStr[0]!=$str[0]) {
