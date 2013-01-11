@@ -1,22 +1,21 @@
-<?php	
-	public function parseContent($content)
-    {
-        $parseContent = array();
-        $content = explode('#', $content);
-        foreach ($content as $exp){
-            $str = explode("\n", $exp, 2);
-            $keyStr = explode('=', $str[0], 2);
-            if($keyStr[0]!=$str[0]){
-                $key = $keyStr[0];
-                $des = str_replace($keyStr[0].'=', '', $str[0]);
-            }
-            else{
-                $key = $str[0];
-                $des = str_replace($str[0], '', $exp);
-            }
-            trim($key);
-            trim($des);
-            $parseContent[$key] = $des;
-        }
-        return $parseContent;
+<?php
+
+function parseContent($content)
+{
+    $parseContent = array();
+    $content = explode("\n#", "\n" . $content);
+    foreach ($content as $block) {
+        if (empty($block))
+            continue;
+        
+        $strs  = explode("\n", $block, 2);
+        $parts = explode('=', $strs[0], 2);
+        
+        list($key, $val) = isset($parts[1]) ? $parts : $strs;
+
+        $key = trim($key);
+        $val = trim($val);
+        $parseContent[$key] = $val;
     }
+    return $parseContent;
+}
