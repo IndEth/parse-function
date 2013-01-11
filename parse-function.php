@@ -14,8 +14,8 @@
                 $key = $str[0];
                 $des = str_replace($str[0], '', $exp);
             }
-            trim($key);
-            trim($des);
+            $key = trim($key);
+            $des = trim($des);
             $parseContent[$key] = $des;
         }
         return $parseContent;
