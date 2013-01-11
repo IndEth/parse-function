@@ -1,5 +1,5 @@
-<?php	
-	public function parseContent($content)
+<?php
+	function parseContent($content)
     {
         $parseContent = array();
         $content = explode('#', $content);
