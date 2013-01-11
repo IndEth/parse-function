@@ -4,18 +4,18 @@ function parseContent($content)
 {
     $parseContent = array();
     $content = explode("\n#", "\n" . $content);
-    foreach ($content as $exp) {
-        if (empty($exp))
+    foreach ($content as $block) {
+        if (empty($block))
             continue;
         
-        $str = explode("\n", $exp, 2);
-        $keyStr = explode('=', $str[0], 2);
+        $strs  = explode("\n", $block, 2);
+        $parts = explode('=', $strs[0], 2);
         
-        list($key, $des) = isset($keyStr[1]) ? $keyStr : $str;
+        list($key, $val) = isset($parts[1]) ? $parts : $strs;
 
         $key = trim($key);
-        $des = trim($des);
-        $parseContent[$key] = $des;
+        $val = trim($val);
+        $parseContent[$key] = $val;
     }
     return $parseContent;
 }
