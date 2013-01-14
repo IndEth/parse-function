@@ -2,7 +2,7 @@
 	public function parseContent($content)
     {
         $parseContent = array();
-        $expContent = preg_split("/[\n]#+/s", $content);
+        $expContent = explode("\n#", $content);
         if($content{0}!='#')
             unset ($expContent[0]);
         else 
@@ -10,7 +10,7 @@
         foreach ($expContent as $exp){
             $str = explode("\n", $exp, 2);
             $keyStr = explode('=', $str[0], 2);
-            if($keyStr[0]!=$str[0]){
+            if(isset($keyStr[1])){
                 $key = $keyStr[0];
                 $des = $keyStr[1];
             }
@@ -18,8 +18,8 @@
                 $key = $str[0];
                 $des = end($str);
             }
-            trim($key);
-            trim($des);
+            $key = trim($key);
+            $des = trim($des);
             $parseContent[$key] = $des;
         }
         return $parseContent;
